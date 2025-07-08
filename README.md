@@ -51,4 +51,4 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for details.
 
 ---
 
-> *Maintained with ♥ by the Empirical Economics Lab.*
+> *Maintained with ♥ by Nathan Lane and Industrial Policy Group
