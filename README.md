@@ -1,6 +1,10 @@
 # Empirical Economics Lab Manual
 
-Welcome to the Empirical Economics Lab Manual! This repository is a living handbook for research assistants (RAs) working in computational and empirical social science. It distills best practices for reproducible research, coding standards across multiple languages, and workflow organization so that every project can be replicated and extended with confidence.
+Welcome to the empirical economic lab manual. This repository serves as a living handbook for research assistants (RAs) working in computational and empirical social sciences. It distills best practices for reproducible research, coding standards across multiple languages, and workflow organization so that every project can be replicated and extended with confidence.
+
+The goal is to get you up and running quickly for empirical projects, especially for working on my teams and others. 
+
+This is a distant fork of other lab manuals.
 
 ---
 
