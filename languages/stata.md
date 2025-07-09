@@ -1,100 +1,234 @@
-# Stata Guide
+📝 Stata Programming Best Practices
 
-A concise yet comprehensive reference for writing clean, reproducible Stata code in empirical economics projects.
+A comprehensive guide to writing clean, reproducible Stata code tailored for junior researchers.
 
----
+⸻
 
-## 📂 Project Organization
+📂 1. Project Organization and File Structure
 
-```text
+🔑 Key Principles:
+	•	Clearly separate raw data, processed data, scripts, and outputs.
+	•	Use consistent file naming conventions.
+	•	Favor relative paths over absolute paths.
+	•	Centralize and define paths once.
+	•	Employ standardized project templates.
+
+📁 Recommended Directory Structure:
+
 project/
-└── code/
-    ├── 0_setup.do        <- Install packages, set globals/paths
-    ├── 1_clean_data.do   <- Transform raw data
-    ├── 2_analysis.do     <- Run estimations & save results
-    ├── 3_output.do       <- Export tables & figures
-    └── master.do         <- Calls the scripts above in order
-```
+├── data/
+│   ├── raw/
+│   └── processed/
+├── code/
+│   ├── 0_setup.do
+│   ├── 1_clean_data.do
+│   ├── 2_analysis.do
+│   ├── 3_output.do
+│   └── master.do
+└── output/
+    ├── tables/
+    ├── figures/
+    └── logs/
 
-`master.do` should be the *only* script that a new RA needs to run to reproduce results.
+🖥️ Quick Start:
 
----
+Always run scripts from master.do at the project root:
 
-## ✍️ Naming Conventions
+do "code/master.do"
 
-| Element | Convention | Example |
-|---------|------------|---------|
-| Variables | lowercase with underscores | `l_grossoutput` |
-| Programs  | descriptive verbs | `prep_data`, `export_reg_results` |
-| Tempfiles | use `tempfile` & meaningful names | `tempfile merged` |
-| Scripts   | numeric prefixes for execution order | `02_merge_trade.do` |
+🚨 Common Pitfalls:
+	•	Avoid absolute paths (e.g., "C:/Users/...").
+	•	Don’t mix raw and processed data.
 
----
+⸻
 
-## 📝 Documentation Style
+📊 2. Data Management Best Practices
 
-```stata
-*------------------------------------------------------------------------------*
-* What this does:
-*   [Clear description of purpose]
-*
-* Dependencies:
-*   - [List required packages]
-*
-* Inputs:
-*   - [List input files with paths]
-*
-* Outputs:
-*   - [List output files with descriptions]
-*------------------------------------------------------------------------------*
-```
+🔑 Key Principles:
+	•	Never alter raw datasets directly.
+	•	Create audit trails by logging transformations.
+	•	Use clear, consistent variable names.
+	•	Label variables and values explicitly.
+	•	Document data changes thoroughly.
 
-Place this block **at the top** of every `.do` file.
+📋 Examples:
 
----
+label variable wage "Hourly Wage in USD"
+label define gender_lbl 0 "Female" 1 "Male"
+label values gender gender_lbl
 
-## 🔑 Best Practices
+🖥️ Quick Start:
 
-1. **Clean Slate** – Start scripts with:
-   ```stata
-   capture log close _all
-   clear all
-   set more off
-   ````
-2. **Drop Before Define** – Always `capture program drop myprog` before creating a program.
-3. **Centralize Paths** – Define globals for data and output paths *once* in `0_setup.do`.
-4. **Use Locals** – Store constants (e.g., lists of variables) in local macros.
-5. **Validate Data** – After merges, run `assert _merge == 3` and summarize key variables.
-6. **Log Everything** – Wrap scripts in `log using "../output/logs/1_clean_data.log", replace`.
+Always verify merges immediately:
 
----
+merge 1:1 id using "../data/raw/dataset.dta"
+assert _merge == 3
 
-## ⚙️ Example `master.do`
+🚨 Common Pitfalls:
+	•	Forgetting to log data changes.
+	•	Unclear variable labels causing confusion.
 
-```stata
-/*******************************************************************
- Master script to reproduce the paper "Trade Shocks & Wages".
- Place this file at project root and execute: do master.do
+⸻
+
+📝 3. Code Style and Documentation
+
+🔑 Key Principles:
+	•	Comment liberally but meaningfully.
+	•	Consistent indentation (2-4 spaces).
+	•	Meaningful macro and variable names.
+	•	Divide complex tasks into simpler blocks.
+	•	Header templates for .do files.
+
+📋 Example Header:
+
+/******************************************************************
+Purpose: Clean employment data
+Inputs: raw/employment.dta
+Outputs: processed/employment_clean.dta
+Dependencies: None
+Author: Your Name
+Date: YYYY-MM-DD
 *******************************************************************/
 
-// 1. Setup -------------------------------------------------------------------
+🖥️ Quick Start:
+
+Clear environment at script start:
+
+clear all
+set more off
+
+🚨 Common Pitfalls:
+	•	Sparse or overly verbose comments.
+	•	Ambiguous variable naming.
+
+⸻
+
+♻️ 4. Reproducibility Techniques
+
+🔑 Key Principles:
+	•	Always set seeds.
+	•	Manage Stata version explicitly.
+	•	Handle external dependencies clearly.
+	•	Use master do-files for workflow.
+	•	Log outputs systematically.
+
+📋 Examples:
+
+version 17.0
+set seed 12345
+
+🖥️ Quick Start:
+
+Centralize log management:
+
+log using "../output/logs/analysis.log", replace
+
+🚨 Common Pitfalls:
+	•	Ignoring seed-setting, leading to non-reproducible results.
+
+⸻
+
+⚙️ 5. Workflow Automation
+
+🔑 Key Principles:
+	•	Use loops for repetitive tasks.
+	•	Write and reuse programs.
+	•	Employ macros efficiently.
+	•	Automate table/figure exports.
+
+📋 Examples:
+
+foreach var of varlist age income {
+  summarize `var'
+}
+
+program define prep_data
+  syntax using/
+  import delimited "`using'", clear
+end
+
+🖥️ Quick Start:
+
+Use loops immediately for repetitive summaries.
+
+🚨 Common Pitfalls:
+	•	Overcomplicating automation.
+	•	Misuse of global macros.
+
+⸻
+
+✅ 6. Quality Assurance
+
+🔑 Key Principles:
+	•	Use assert statements for validation.
+	•	Debug incrementally.
+	•	Review code systematically.
+	•	Implement basic unit tests.
+
+📋 Examples:
+
+assert age >= 0 & age <= 120
+
+🖥️ Quick Start:
+
+Immediately incorporate basic asserts after data cleaning.
+
+🚨 Common Pitfalls:
+	•	Ignoring data validation steps.
+
+⸻
+
+🤝 7. Collaboration and Sharing
+
+🔑 Key Principles:
+	•	Clean code before sharing.
+	•	Provide clear README documentation.
+	•	Follow data confidentiality protocols.
+	•	Use version control (e.g., GitHub).
+
+📋 Example README snippet:
+
+# Project Title
+
+Description of project, data, and scripts.
+
+## Instructions to Reproduce:
+- Run `code/master.do`
+
+## Author(s)
+- Your Name
+
+🖥️ Quick Start:
+
+Immediately create README.md in project root.
+
+🚨 Common Pitfalls:
+	•	Neglecting confidentiality concerns.
+
+⸻
+
+🗒️ One-Page Cheat Sheet:
+	•	✅ Paths: Always relative, centrally defined.
+	•	✅ Data: Raw immutable; audit trails essential.
+	•	✅ Comments: Meaningful, clear, standardized.
+	•	✅ Reproducibility: Set seeds; master .do files.
+	•	✅ Automation: Loops and programs to streamline.
+	•	✅ Quality: Frequent assert checks.
+	•	✅ Sharing: Clear README; clean, documented code.
+
+⸻
+
+🖥️ Sample Workflow:
+
 do "code/0_setup.do"
-
-// 2. Data Preparation ---------------------------------------------------------
 do "code/1_clean_data.do"
-
-// 3. Analysis -----------------------------------------------------------------
 do "code/2_analysis.do"
-
-// 4. Output -------------------------------------------------------------------
 do "code/3_output.do"
 
-// End -------------------------------------------------------------------------
-```
 
----
+⸻
 
-## 📚 Additional Resources
-
-- [Stata Style Guide: World Bank](https://github.com/worldbank/Stata-Style-Guide)
-- [Ado-lint](https://github.com/wbuchanan/ado-lint) – Linter for Stata code.
+📚 Further Learning Resources:
+	•	Stata Style Guide (World Bank)
+	•	ado-lint: Linter for Stata
+	•	UCLA IDRE Stata Resources
