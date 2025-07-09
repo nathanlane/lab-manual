@@ -20,6 +20,9 @@ This is a distant fork of other lab manuals.
 4. [Templates](templates/README.md) – Ready-to-use code templates you can copy into your own projects.
 5. [Examples](examples/) – Minimal example projects that demonstrate the practices in action.
 6. [Best Practices Checklist](best_practices_checklist.md) – Quick reference before you start, run, share, or publish research.
+7. [Coding Style Guide](style-guide/README.md) – Conventions for all languages.
+8. [Python Reproducibility](languages/python_repro/README.md) – Managing environments and data workflows.
+9. [Stata Quick-Start](languages/stata_quickstart/README.md) – Using VS Code and Conda.
 
 ---
 
