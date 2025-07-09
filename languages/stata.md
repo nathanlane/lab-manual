@@ -1,20 +1,22 @@
-📝 Stata Programming Best Practices
+# 📝 **Stata Programming Best Practices**
 
 A comprehensive guide to writing clean, reproducible Stata code tailored for junior researchers.
 
-⸻
+---
 
-📂 1. Project Organization and File Structure
+## 📂 **1. Project Organization and File Structure**
 
-🔑 Key Principles:
-	•	Clearly separate raw data, processed data, scripts, and outputs.
-	•	Use consistent file naming conventions.
-	•	Favor relative paths over absolute paths.
-	•	Centralize and define paths once.
-	•	Employ standardized project templates.
+### 🔑 Key Principles:
 
-📁 Recommended Directory Structure:
+- Clearly separate raw data, processed data, scripts, and outputs.
+- Use consistent file naming conventions.
+- Favor relative paths over absolute paths.
+- Centralize and define paths once.
+- Employ standardized project templates.
 
+### 📁 Recommended Directory Structure:
+
+```text
 project/
 ├── data/
 │   ├── raw/
@@ -29,58 +31,70 @@ project/
     ├── tables/
     ├── figures/
     └── logs/
+```
 
-🖥️ Quick Start:
+### 🖥️ Quick Start:
 
-Always run scripts from master.do at the project root:
+Always run scripts from `master.do` at the project root:
 
+```stata
 do "code/master.do"
+```
 
-🚨 Common Pitfalls:
-	•	Avoid absolute paths (e.g., "C:/Users/...").
-	•	Don’t mix raw and processed data.
+### 🚨 Common Pitfalls:
 
-⸻
+- Avoid absolute paths (e.g., `"C:/Users/..."`).
+- Don't mix raw and processed data.
 
-📊 2. Data Management Best Practices
+---
 
-🔑 Key Principles:
-	•	Never alter raw datasets directly.
-	•	Create audit trails by logging transformations.
-	•	Use clear, consistent variable names.
-	•	Label variables and values explicitly.
-	•	Document data changes thoroughly.
+## 📊 **2. Data Management Best Practices**
 
-📋 Examples:
+### 🔑 Key Principles:
 
+- Never alter raw datasets directly.
+- Create audit trails by logging transformations.
+- Use clear, consistent variable names.
+- Label variables and values explicitly.
+- Document data changes thoroughly.
+
+### 📋 Examples:
+
+```stata
 label variable wage "Hourly Wage in USD"
 label define gender_lbl 0 "Female" 1 "Male"
 label values gender gender_lbl
+```
 
-🖥️ Quick Start:
+### 🖥️ Quick Start:
 
 Always verify merges immediately:
 
+```stata
 merge 1:1 id using "../data/raw/dataset.dta"
 assert _merge == 3
+```
 
-🚨 Common Pitfalls:
-	•	Forgetting to log data changes.
-	•	Unclear variable labels causing confusion.
+### 🚨 Common Pitfalls:
 
-⸻
+- Forgetting to log data changes.
+- Unclear variable labels causing confusion.
 
-📝 3. Code Style and Documentation
+---
 
-🔑 Key Principles:
-	•	Comment liberally but meaningfully.
-	•	Consistent indentation (2-4 spaces).
-	•	Meaningful macro and variable names.
-	•	Divide complex tasks into simpler blocks.
-	•	Header templates for .do files.
+## 📝 **3. Code Style and Documentation**
 
-📋 Example Header:
+### 🔑 Key Principles:
 
+- Comment liberally but meaningfully.
+- Consistent indentation (2-4 spaces).
+- Meaningful macro and variable names.
+- Divide complex tasks into simpler blocks.
+- Header templates for `.do` files.
+
+### 📋 Example Header:
+
+```stata
 /******************************************************************
 Purpose: Clean employment data
 Inputs: raw/employment.dta
@@ -89,55 +103,67 @@ Dependencies: None
 Author: Your Name
 Date: YYYY-MM-DD
 *******************************************************************/
+```
 
-🖥️ Quick Start:
+### 🖥️ Quick Start:
 
 Clear environment at script start:
 
+```stata
 clear all
 set more off
+```
 
-🚨 Common Pitfalls:
-	•	Sparse or overly verbose comments.
-	•	Ambiguous variable naming.
+### 🚨 Common Pitfalls:
 
-⸻
+- Sparse or overly verbose comments.
+- Ambiguous variable naming.
 
-♻️ 4. Reproducibility Techniques
+---
 
-🔑 Key Principles:
-	•	Always set seeds.
-	•	Manage Stata version explicitly.
-	•	Handle external dependencies clearly.
-	•	Use master do-files for workflow.
-	•	Log outputs systematically.
+## ♻️ **4. Reproducibility Techniques**
 
-📋 Examples:
+### 🔑 Key Principles:
 
+- Always set seeds.
+- Manage Stata version explicitly.
+- Handle external dependencies clearly.
+- Use master do-files for workflow.
+- Log outputs systematically.
+
+### 📋 Examples:
+
+```stata
 version 17.0
 set seed 12345
+```
 
-🖥️ Quick Start:
+### 🖥️ Quick Start:
 
 Centralize log management:
 
+```stata
 log using "../output/logs/analysis.log", replace
+```
 
-🚨 Common Pitfalls:
-	•	Ignoring seed-setting, leading to non-reproducible results.
+### 🚨 Common Pitfalls:
 
-⸻
+- Ignoring seed-setting, leading to non-reproducible results.
 
-⚙️ 5. Workflow Automation
+---
 
-🔑 Key Principles:
-	•	Use loops for repetitive tasks.
-	•	Write and reuse programs.
-	•	Employ macros efficiently.
-	•	Automate table/figure exports.
+## ⚙️ **5. Workflow Automation**
 
-📋 Examples:
+### 🔑 Key Principles:
 
+- Use loops for repetitive tasks.
+- Write and reuse programs.
+- Employ macros efficiently.
+- Automate table/figure exports.
+
+### 📋 Examples:
+
+```stata
 foreach var of varlist age income {
   summarize `var'
 }
@@ -146,48 +172,56 @@ program define prep_data
   syntax using/
   import delimited "`using'", clear
 end
+```
 
-🖥️ Quick Start:
+### 🖥️ Quick Start:
 
 Use loops immediately for repetitive summaries.
 
-🚨 Common Pitfalls:
-	•	Overcomplicating automation.
-	•	Misuse of global macros.
+### 🚨 Common Pitfalls:
 
-⸻
+- Overcomplicating automation.
+- Misuse of global macros.
 
-✅ 6. Quality Assurance
+---
 
-🔑 Key Principles:
-	•	Use assert statements for validation.
-	•	Debug incrementally.
-	•	Review code systematically.
-	•	Implement basic unit tests.
+## ✅ **6. Quality Assurance**
 
-📋 Examples:
+### 🔑 Key Principles:
 
+- Use assert statements for validation.
+- Debug incrementally.
+- Review code systematically.
+- Implement basic unit tests.
+
+### 📋 Examples:
+
+```stata
 assert age >= 0 & age <= 120
+```
 
-🖥️ Quick Start:
+### 🖥️ Quick Start:
 
 Immediately incorporate basic asserts after data cleaning.
 
-🚨 Common Pitfalls:
-	•	Ignoring data validation steps.
+### 🚨 Common Pitfalls:
 
-⸻
+- Ignoring data validation steps.
 
-🤝 7. Collaboration and Sharing
+---
 
-🔑 Key Principles:
-	•	Clean code before sharing.
-	•	Provide clear README documentation.
-	•	Follow data confidentiality protocols.
-	•	Use version control (e.g., GitHub).
+## 🤝 **7. Collaboration and Sharing**
 
-📋 Example README snippet:
+### 🔑 Key Principles:
 
+- Clean code before sharing.
+- Provide clear README documentation.
+- Follow data confidentiality protocols.
+- Use version control (e.g., GitHub).
+
+### 📋 Example README snippet:
+
+```markdown
 # Project Title
 
 Description of project, data, and scripts.
@@ -198,37 +232,44 @@ Description of project, data, and scripts.
 ## Author(s)
 - Your Name
 
-🖥️ Quick Start:
+```
+
+### 🖥️ Quick Start:
 
 Immediately create README.md in project root.
 
-🚨 Common Pitfalls:
-	•	Neglecting confidentiality concerns.
+### 🚨 Common Pitfalls:
 
-⸻
+- Neglecting confidentiality concerns.
 
-🗒️ One-Page Cheat Sheet:
-	•	✅ Paths: Always relative, centrally defined.
-	•	✅ Data: Raw immutable; audit trails essential.
-	•	✅ Comments: Meaningful, clear, standardized.
-	•	✅ Reproducibility: Set seeds; master .do files.
-	•	✅ Automation: Loops and programs to streamline.
-	•	✅ Quality: Frequent assert checks.
-	•	✅ Sharing: Clear README; clean, documented code.
+---
 
-⸻
+## 🗒️ **One-Page Cheat Sheet:**
 
-🖥️ Sample Workflow:
+- ✅ **Paths:** Always relative, centrally defined.
+- ✅ **Data:** Raw immutable; audit trails essential.
+- ✅ **Comments:** Meaningful, clear, standardized.
+- ✅ **Reproducibility:** Set seeds; master `.do` files.
+- ✅ **Automation:** Loops and programs to streamline.
+- ✅ **Quality:** Frequent assert checks.
+- ✅ **Sharing:** Clear README; clean, documented code.
 
+---
+
+## 🖥️ **Sample Workflow:**
+
+```stata
 do "code/0_setup.do"
 do "code/1_clean_data.do"
 do "code/2_analysis.do"
 do "code/3_output.do"
+```
 
+---
 
-⸻
+## 📚 **Further Learning Resources:**
 
-📚 Further Learning Resources:
-	•	Stata Style Guide (World Bank)
-	•	ado-lint: Linter for Stata
-	•	UCLA IDRE Stata Resources
+- [Stata Style Guide (World Bank)](https://github.com/worldbank/Stata-Style-Guide)
+- [ado-lint: Linter for Stata](https://github.com/wbuchanan/ado-lint)
+- [UCLA IDRE Stata Resources](https://stats.idre.ucla.edu/stata/)
+
