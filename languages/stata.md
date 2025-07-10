@@ -2,6 +2,8 @@
 
 A complete guide to writing clean, reproducible Stata code for researchers.
 
+This is targeted at social scientists, since we're not often taught these skills.
+
 ---
 
 ## **Table of Contents**
