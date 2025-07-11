@@ -1521,7 +1521,7 @@ do "code/master.do"
 
 ---
 
-## 📚 **Further Learning Resources**
+## 📚 **Further Learning **
 
 ### **Core References**
 - [Stata Style Guide (World Bank)](https://github.com/worldbank/Stata-Style-Guide) - Essential coding standards
@@ -1532,6 +1532,30 @@ do "code/master.do"
 - [DIME Wiki](https://dimewiki.worldbank.org/Stata_Coding_Practices) - Development Impact Evaluation practices
 - [Stata Visual Library](https://worldbank.github.io/Stata-IE-Visual-Library/) - Professional graph examples
 - [Project TIER](https://www.projecttier.org/) - Reproducible research protocols
+
+### **Further Reading**
+
+#### Beginner
+
+Gentzkow, M., & Shapiro, J. M. (2014). Code and Data for the Social Sciences: A Practitioner’s Guide. - A foundational guide to reproducible research, not specific to Stata but highly relevant.
+
+The World Bank DIME Analytics' Stata Coding Practices - An excellent and practical guide for getting started.
+
+Julian Reif's Stata Coding Guide - A comprehensive and well-regarded guide from a prominent economist.
+
+#### Intermediate
+
+Long, J. S. (2009). The Workflow of Data Analysis Using Stata. Stata Press. - A classic book on organizing data analysis projects in Stata.
+
+Bischof, D. (2017). repkit: A Command to Augment Reproducible Research Practices. Stata Journal, 17(4), 987-1002. - Introduces a useful tool for reproducible reporting.
+
+Stata Conference Proceedings - A rich source of cutting-edge techniques and new tools.
+
+#### Advanced
+
+Gelman, A., & Hill, J. (2007). Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press. - While a statistics text, it contains excellent discussions on workflow and checking model assumptions. Gelman is a gem.
+
+Software engineering books: such as "The Pragmatic Programmer" by Andrew Hunt and David Thomas, and "Clean Code" by Martin, offer timeless principles that are highly applicable to research programming. Plus he pissed people off, which is entertaining.
 
 ---
 
